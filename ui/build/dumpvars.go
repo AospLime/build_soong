@@ -138,6 +138,8 @@ func dumpMakeVars(ctx Context, config Config, goals, vars []string, write_soong_
 var BannerVars = []string{
 	"PLATFORM_VERSION_CODENAME",
 	"PLATFORM_VERSION",
+	"LIME_BUILD_VERSION",
+	"LIME_BUILD_TYPE",
 	"TARGET_PRODUCT",
 	"TARGET_BUILD_VARIANT",
 	"TARGET_BUILD_TYPE",
@@ -167,13 +169,27 @@ var BannerVars = []string{
 func Banner(make_vars map[string]string) string {
 	b := &bytes.Buffer{}
 
-	fmt.Fprintln(b, "============================================")
-	for _, name := range BannerVars {
-		if make_vars[name] != "" {
-			fmt.Fprintf(b, "%s=%s\n", name, make_vars[name])
-		}
-	}
-	fmt.Fprint(b, "============================================")
+
+	fmt.Fprintln(b, "=============================================================")
+	fmt.Fprintln(b, "                                                             ")
+	fmt.Fprintln(b, "                 ██╗     ██╗███╗   ███╗███████╗              ")
+	fmt.Fprintln(b, "                 ██║     ██║████╗ ████║██╔════╝              ")
+	fmt.Fprintln(b, "                 ██║     ██║██╔████╔██║█████╗                ")
+	fmt.Fprintln(b, "                 ██║     ██║██║╚██╔╝██║██╔══╝                ")
+	fmt.Fprintln(b, "                 ███████╗██║██║ ╚═╝ ██║███████╗              ")
+	fmt.Fprintln(b, "                 ╚══════╝╚═╝╚═╝     ╚═╝╚══════╝              ")
+	fmt.Fprintln(b, "=============================================================")
+	fmt.Fprintln(b, "                          AospLime                           ")
+	fmt.Fprintln(b, "              Enjoy the freshness of the Lime Juice          ")
+	fmt.Fprintln(b, "=============================================================")
+        fmt.Fprintf(b, "%s=%s\n", "PLATFORM_VERSION", make_vars["PLATFORM_VERSION"])
+        fmt.Fprintf(b, "%s=%s\n", "TARGET_BUILD_VARIANT", make_vars["TARGET_BUILD_VARIANT"])
+	fmt.Fprintf(b, "%s=%s\n", "LIME_BUILD_VERSION", make_vars["LIME_BUILD_VERSION"])
+	fmt.Fprintf(b, "%s=%s\n", "LIME_BUILD_TYPE", make_vars["LIME_BUILD_TYPE"])
+	fmt.Fprintf(b, "%s=%s\n", "BUILD_ID", make_vars["BUILD_ID"])
+	fmt.Fprintf(b, "%s=%s\n", "OUT_DIR", make_vars["OUT_DIR"])
+	fmt.Fprintf(b, "%s=%s\n", "PRODUCT_SOONG_NAMESPACES", make_vars["PRODUCT_SOONG_NAMESPACES"])
+	fmt.Fprintln(b, "=============================================================")
 
 	return b.String()
 }
